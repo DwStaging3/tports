@@ -722,13 +722,13 @@ def enter(
     if new_session:
         envs["PYTHONUNBUFFERED"] = "1"
 
-    # tcache path is searched first
+    # ccache path is searched first
     #
-    # this has the implication of having tcache invoke whatever cc wrapper
+    # this has the implication of having ccache invoke whatever cc wrapper
     # we have at the time, rather than the other way around, which means
-    # the wrappers don't have to account for tcache explicitly
-    if "TCACHEPATH" in envs:
-        envs["PATH"] = envs["TCACHEPATH"] + ":" + envs["PATH"]
+    # the wrappers don't have to account for ccache explicitly
+    if "ccachePATH" in envs:
+        envs["PATH"] = envs["ccachePATH"] + ":" + envs["PATH"]
 
     if ro_root:
         root_bind = "--ro-bind"

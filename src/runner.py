@@ -21,8 +21,8 @@ opt_harch = None
 opt_gen_dbg = True
 opt_check = True
 opt_epkgs = ""
-opt_tcache = False
-opt_stcache = False
+opt_ccache = False
+opt_sccache = False
 opt_tltocache = False
 opt_tltocachesize = "10g"
 opt_comp = "zstd"
@@ -111,8 +111,8 @@ def handle_options():
 
     global opt_apkcmd, opt_bwcmd, opt_dryrun, opt_bulkcont, opt_timing
     global opt_arch, opt_tltocache
-    global opt_harch, opt_gen_dbg, opt_check, opt_tcache, opt_tltocachesize
-    global opt_stcache, opt_makejobs, opt_lthreads, opt_nocolor, opt_signkey
+    global opt_harch, opt_gen_dbg, opt_check, opt_ccache, opt_tltocachesize
+    global opt_sccache, opt_makejobs, opt_lthreads, opt_nocolor, opt_signkey
     global opt_force, opt_mdirtemp, opt_allowcat, opt_restricted
     global opt_nonet, opt_dirty, opt_statusfd, opt_keeptemp, opt_forcecheck
     global opt_checkfail, opt_stage, opt_altrepo, opt_stagepath, opt_bldroot
@@ -353,8 +353,8 @@ def handle_options():
 
         opt_timing = bcfg.getboolean("timing", fallback=opt_timing)
         opt_gen_dbg = bcfg.getboolean("build_dbg", fallback=opt_gen_dbg)
-        opt_tcache = bcfg.getboolean("tcache", fallback=opt_tcache)
-        opt_stcache = bcfg.getboolean("stcache", fallback=opt_stcache)
+        opt_ccache = bcfg.getboolean("ccache", fallback=opt_ccache)
+        opt_sccache = bcfg.getboolean("sccache", fallback=opt_sccache)
         opt_tltocache = bcfg.getboolean("thinlto_cache", fallback=opt_tltocache)
         opt_check = bcfg.getboolean("check", fallback=opt_check)
         opt_checkfail = bcfg.getboolean("check_fail", fallback=opt_checkfail)
@@ -1785,8 +1785,8 @@ def do_pkg(tgt, pkgn=None, force=None, check=None, stage=None):
             (opt_makejobs, opt_lthreads),
             opt_gen_dbg,
             (
-                opt_tcache,
-                opt_stcache,
+                opt_ccache,
+                opt_sccache,
                 opt_tltocachesize if opt_tltocache else None,
             ),
             None,
@@ -1998,8 +1998,8 @@ def _bulkpkg(pkgs, statusf, do_build, do_raw, version):
                 (opt_makejobs, opt_lthreads),
                 opt_gen_dbg,
                 (
-                    opt_tcache,
-                    opt_stcache,
+                    opt_ccache,
+                    opt_sccache,
                     opt_tltocachesize if opt_tltocache else None,
                 ),
                 None,

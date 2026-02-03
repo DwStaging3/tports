@@ -773,8 +773,8 @@ class Template(Package):
         self.force_mode = force_mode
         self.bulk_mode = bulk_mode
         self.build_dbg = build_dbg
-        self.use_tcache = caches[0] if caches else None
-        self.use_stcache = caches[1] if caches else None
+        self.use_ccache = caches[0] if caches else None
+        self.use_sccache = caches[1] if caches else None
         self.use_ltocache = caches[2] if caches else None
         self.conf_jobs = jobs[0]
         self.conf_link_threads = jobs[1]
@@ -1773,19 +1773,19 @@ class Template(Package):
         if cpf.triplet:
             cenv["TBUILD_TARGET_TRIPLET"] = cpf.triplet
 
-        if self.use_tcache:
-            cenv["TCACHEPATH"] = "/usr/lib/tcache/bin"
-            cenv["TCACHE_DIR"] = "/tbuild_cache/tcache"
-            cenv["TCACHE_BASEDIR"] = str(self.chroot_cwd)
-            cenv["TCACHE_TEMPDIR"] = "/tmp/tcache"
+        if self.use_ccache:
+            cenv["ccachePATH"] = "/usr/lib/ccache/bin"
+            cenv["ccache_DIR"] = "/tbuild_cache/ccache"
+            cenv["ccache_BASEDIR"] = str(self.chroot_cwd)
+            cenv["ccache_TEMPDIR"] = "/tmp/ccache"
 
         if (
-            self.use_stcache
-            and (self.bldroot_path / "usr/bin/stcache").exists()
+            self.use_sccache
+            and (self.bldroot_path / "usr/bin/sccache").exists()
         ):
-            cenv["RUSTC_WRAPPER"] = "/usr/bin/stcache"
-            cenv["STCACHE_DIR"] = "/tbuild_cache/stcache"
-            cenv["STCACHE_IDLE_TIMEOUT"] = "30"
+            cenv["RUSTC_WRAPPER"] = "/usr/bin/sccache"
+            cenv["Sccache_DIR"] = "/tbuild_cache/sccache"
+            cenv["Sccache_IDLE_TIMEOUT"] = "30"
 
         cenv.update(self.tools)
 

@@ -4,12 +4,12 @@ from tbuild.util import flock
 
 # avoid re-parsing same templates every time; the pkgver will
 # never be conditional and that is the only thing we care about
-_tcache = {}
+_ccache = {}
 
 
 def _srcpkg_ver(pkgn, pkgb):
-    if pkgn in _tcache:
-        return _tcache[pkgn]
+    if pkgn in _ccache:
+        return _ccache[pkgn]
 
     tmplpath = None
     for r in pkgb.source_repositories:
@@ -61,7 +61,7 @@ def _srcpkg_ver(pkgn, pkgb):
         return None, tmplv.full_pkgname
 
     cv = f"{pver}-r{prel}"
-    _tcache[pkgn] = (cv, tmplv.full_pkgname)
+    _ccache[pkgn] = (cv, tmplv.full_pkgname)
 
     return cv, tmplv.full_pkgname
 
@@ -468,7 +468,7 @@ def install(pkg, origpkg, step, depmap, hostdep, update_check):
                     pkg.run_check,
                     (pkg.conf_jobs, pkg.conf_link_threads),
                     pkg.build_dbg,
-                    (pkg.use_tcache, pkg.use_stcache, pkg.use_ltocache),
+                    (pkg.use_ccache, pkg.use_sccache, pkg.use_ltocache),
                     pkg,
                     force_check=pkg._force_check,
                     stage=pkg.stage,
@@ -496,7 +496,7 @@ def install(pkg, origpkg, step, depmap, hostdep, update_check):
                     pkg.run_check,
                     (pkg.conf_jobs, pkg.conf_link_threads),
                     pkg.build_dbg,
-                    (pkg.use_tcache, pkg.use_stcache, pkg.use_ltocache),
+                    (pkg.use_ccache, pkg.use_sccache, pkg.use_ltocache),
                     pkg,
                     force_check=pkg._force_check,
                     stage=pkg.stage,

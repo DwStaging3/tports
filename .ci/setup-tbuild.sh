@@ -19,7 +19,7 @@ cat << EOF > etc/config.ini
 [apk]
 command = $(pwd)/${APK_FILE}
 [build]
-tcache = yes
+ccache = yes
 # they will not be packaged, but we can still CI them (no public artifacts)
 allow_restricted = yes
 EOF
@@ -27,12 +27,12 @@ EOF
 echo "=> Generating tbuild key..."
 python3.12 tbuild keygen
 
-echo "=> Setting up tcache configuration..."
-mkdir -p tbuild_cache/tcache
+echo "=> Setting up ccache configuration..."
+mkdir -p tbuild_cache/ccache
 printf "%s\n" \
     "absolute_paths_in_stderr = true" \
     "sloppiness = pch_defines,time_macros,file_stat_matches,file_stat_matches_ctime,random_seed,include_file_mtime" \
     "max_size = 1G" \
-    > tbuild_cache/tcache/tcache.conf
+    > tbuild_cache/ccache/ccache.conf
 
 echo "... done setting up tbuild."
